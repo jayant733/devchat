@@ -23,3 +23,18 @@ if i dont use
 
 
 create a repository and push the code 
+
+
+
+
+now i will write the code of the 2nd commit 
+
+order on the routes do matter in the api handling 
+when something we type some url we make some get api call to the server and then do work 
+to make a post api call directly from the breowser we will need code and cant do it directly 
+so we will use a software known as post man 
+
+
+in the app.use we can add as many route handler and we can also add it in a array 
+
+route handlers is just the function that is handling the code 
