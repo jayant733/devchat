@@ -1,57 +1,48 @@
-const {userauth} = require("../Middlewares/auth.js")
+//const {userauth} = require("../Middlewares/auth.js")
 //this is the starting point of the applicaiton
 
 //first step we need to create a backedn
 
 const express = require("express");
+const User = require("../src/models/user.js")
 const app = express();
-//it creates an express application
-
-//for handling the incoming requestion we create a request handler funciton
-
-//if i change the order of the code then the test2 / help will give the output as hello from the help
-// app.use("./test2/help", (req,res)=> {
-//     res.send("hello from the help")  //see and play with route extension
-// }) // this will still give the console log as hello 2 because the test2 will override the test2/help
-// app.use("/test", (req,res)=> {
-//     res.send("hello from the server")
-
-// } )//this function is known as the request handler
-
-// app.use("/test2", (req,res)=> {
-//     res.send("hello 2");
-// })
-
-// app.use("./test2/help", (req,res)=> {
-//     res.send("hello from the help")
-// }) // this will still give the console log as hello 2 because the test2 will override the test2/help
-
-app.use(
-  "/user",
-  (req, res, next) => {
-    next();
-    res.send("send1 ");
-  },
-  (req, res, next) => {
-    res.send("CONSOLE.LOG");
-  },
-  (req, res, next) => {
-    res.send("");
-  }
-);
+const {connectDB }= require('./config/database.js')
 
 
-app.use("/admin" , userauth, (req,res) => {
-    res.send("data from the main send ")
-}
-)
-
-
-app.get("/admin/getalldata", (req, res)=> {
-    res.send("get all data is working ")
+//creating a new instance of the data and saving the data setup 
+app.post("/signup", async (req,res)=> {
+    const userObject = {
+        firstName : "Jayant ",
+        lastName :"Sharma",
+        emailId : "jayantsharma3228@gmail.com",
+        password : "jayants",
+       // _id : "505096065975957096478605" //we can also add custom ids but dont modify the ids but never mess up 
     }
-)
+    //mongo db itself created a object id and as well as __v by defualt they are uniquely created 
+   //whenever you are using some db operation always try to put them inside the try catch block 
+   try {
+    const user = new User(userObject) //creating a new instance of the user model and new the name of the model and the data 
+    await user.save() //.sabe will return u a promise and will store a data in database 
+    console.log("user send  ")
+    res.send("user added successfully ") //most of the mongoose will return a promise 
+   } catch(err){
+    console.log(err)
+    res.status(400).send(err.message)
+   }
+  
+})
 
-app.listen(3000, () => {
-  console.log("server is running ");
-}); // this is the port where the server is runnning A
+
+//connectdb is a function so function pe hi .then .catch lagega ya fir try ya catch lagega 
+connectDB().then(
+    ()=> { 
+        console.log("database connetion estabilished")
+        //cluster connected 
+        app.listen(3000, () => {
+            console.log("serverS is running ");
+          }); // this is the port where the server is runnning A
+    }
+).catch((err)=> {
+    console.error("database cannot be connected ")
+})
+

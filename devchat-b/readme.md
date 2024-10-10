@@ -38,3 +38,13 @@ so we will use a software known as post man
 in the app.use we can add as many route handler and we can also add it in a array 
 
 route handlers is just the function that is handling the code 
+
+
+we have to write the code in such a fashion that the database connection should be first then the server should listen to the request calls this is correct as if request call comes first and database not working then it is not good 
+
+
+schema is a way through which what all things should be required to be there in a database 
+mongoose only gives schema 
+
+database refresh hamesha left se hoga 
+each object means 1 doucment there is a database which has collection and then there is document 
